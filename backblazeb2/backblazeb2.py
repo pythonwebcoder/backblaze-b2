@@ -249,7 +249,7 @@ class BackBlazeB2(object):
                                  {'Authorization': self.authorization_token})
 
     # If password is set, encrypt files, else nah
-    def upload_file(self, path, password=None, bucket_id=None, bucket_name=None,
+    def upload_file(self, path, b2_path=None, password=None, bucket_id=None, bucket_name=None,
                     thread_upload_url=None,
                     thread_upload_authorization_token=None):
 
@@ -289,6 +289,8 @@ class BackBlazeB2(object):
             cur_upload_authorization_token = url['authorizationToken']
 
         # fixup filename
+        if b2_path:
+            filename = b2_path
         filename = re.sub('\\\\', '/',
                           path)  # Make sure Windows paths are converted.
         filename = re.sub('^/', '', filename)
